@@ -23,6 +23,50 @@ O programa usa o Google Chrome instalado, mesmo que seu navegador habitual seja 
 
 O FFmpeg reúne o vídeo e o áudio no arquivo MP4. Instale uma versão recente, pois o script usa opções de HLS que podem não existir em versões antigas.
 
+### Instalar pelo PowerShell ou CMD (WinGet)
+
+Abra o **PowerShell** ou o **Prompt de Comando (CMD)** e execute o mesmo comando em qualquer um deles:
+
+```cmd
+winget install --id Gyan.FFmpeg --exact --source winget
+```
+
+Aguarde a instalação terminar. Depois, **feche e abra novamente o terminal** e confira:
+
+```cmd
+ffmpeg -version
+```
+
+Se aparecer a versão, a instalação está pronta: siga para a etapa 4. Não é necessário repetir a instalação manual abaixo.
+
+### Se aparecer “nenhum pacote encontrou os critérios de entrada correspondente”
+
+Atualize os catálogos do WinGet:
+
+```cmd
+winget source update
+```
+
+Depois, procure o pacote:
+
+```cmd
+winget search ffmpeg --source winget
+```
+
+Se aparecer **Gyan.FFmpeg** na coluna **ID**, tente novamente:
+
+```cmd
+winget install --id Gyan.FFmpeg --exact --source winget
+```
+
+Após a instalação, reabra o terminal e execute `ffmpeg -version`. Se a busca não encontrar o pacote ou a atualização falhar, guarde a mensagem de erro para diagnóstico ou use a instalação manual abaixo.
+
+Se **winget não for reconhecido**, instale ou atualize o **Instalador de Aplicativo (App Installer)** pela Microsoft Store, reabra o terminal e tente novamente.
+
+Referência: [documentação de fontes e atualização do WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/source).
+
+### Alternativa: instalar manualmente
+
 1. Acesse a [página de downloads do FFmpeg](https://ffmpeg.org/download.html).
 2. Na seção Windows, abra **Windows builds from gyan.dev**.
 3. Na página de builds, baixe o arquivo ZIP da versão de lançamento, por exemplo **ffmpeg-release-essentials.zip**.
@@ -31,7 +75,7 @@ O FFmpeg reúne o vídeo e o áudio no arquivo MP4. Instale uma versão recente,
 6. Abra a subpasta **bin** e confirme que ela contém `ffmpeg.exe` e `ffprobe.exe`.
 7. Copie o caminho completo dessa pasta `bin` pela barra de endereço do Explorador.
 
-### Adicionar o FFmpeg ao PATH
+### Adicionar o FFmpeg ao PATH após a instalação manual
 
 O PATH permite executar `ffmpeg` de qualquer pasta no PowerShell.
 
