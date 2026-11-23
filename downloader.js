@@ -181,8 +181,8 @@ async function main() {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   let context, relay;
   try {
-    context = await chromium.launchPersistentContext(path.join(__dirname, 'perfil-chrome'), {
-      channel: 'chrome', headless: false, args: ['--start-maximized'] });
+    context = await chromium.launchPersistentContext(path.join(__dirname, 'perfil-edge'), {
+      channel: 'msedge', headless: false, args: ['--start-maximized'] });
     const captures = new Map(), candidates = new Map(), pending = new Set();
     context.on('request', request => {
       const job = request.allHeaders().then(headers => {

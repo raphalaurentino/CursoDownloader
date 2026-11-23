@@ -1,6 +1,6 @@
 # CursoDownloader
 
-Baixa uma videoaula por vez usando a sessão do Chrome e salva em MP4. Para playlists HLS (`.m3u8`), seleciona a maior resolução informada na playlist e preserva áudio separado. O PowerShell mostra o progresso em porcentagem quando a duração do vídeo está disponível.
+Baixa uma videoaula por vez usando a sessão do Edge e salva em MP4. Para playlists HLS (`.m3u8`), seleciona a maior resolução informada na playlist e preserva áudio separado. O PowerShell mostra o progresso em porcentagem quando a duração do vídeo está disponível.
 
 Este guia explica a instalação do zero no Windows. Use o programa para aulas às quais você tem acesso autorizado. Ele não contorna DRM.
 
@@ -11,13 +11,15 @@ Este guia explica a instalação do zero no Windows. Use o programa para aulas �
 3. Execute o instalador e mantenha os componentes padrão, incluindo **npm** e a opção de adicionar ao **PATH**.
 4. Conclua a instalação. Não é necessário instalar ferramentas extras de compilação para este projeto.
 
-## 2. Instalar o Google Chrome
+## 2. Instalar ou conferir o Microsoft Edge
 
-1. Acesse a [página do Google Chrome](https://www.google.com/chrome/).
+Se o Microsoft Edge já estiver instalado, siga para a etapa 3. Caso contrário:
+
+1. Acesse a [página do Microsoft Edge](https://www.microsoft.com/edge/download).
 2. Baixe e execute o instalador.
 3. Aguarde a instalação terminar.
 
-O programa usa o Google Chrome instalado, mesmo que seu navegador habitual seja o Edge ou outro. Não é necessário instalar um navegador separado pelo Playwright.
+O programa usa o Microsoft Edge instalado, mesmo que seu navegador habitual seja outro. Não é necessário instalar um navegador separado pelo Playwright.
 
 ## 3. Instalar o FFmpeg
 
@@ -153,14 +155,14 @@ node .\downloader.js 'https://plataforma.exemplo/assistir-aula/?curso=123&aula_i
 
 Depois de executar:
 
-1. Aguarde o Chrome abrir.
+1. Aguarde o Edge abrir.
 2. Faça login na plataforma nessa janela, se necessário. O programa usa um perfil próprio; estar conectado no seu navegador habitual não garante que este perfil esteja conectado.
 3. Abra a aula desejada e dê **play**. Aguarde o vídeo começar a tocar.
 4. Volte ao PowerShell e pressione **Enter**. Não há prazo fixo para terminar o login.
 5. Confira as opções detectadas. O programa prioriza playlists com a maior resolução declarada. Digite o número da opção desejada e pressione **Enter**, ou pressione apenas **Enter** para selecionar a primeira.
 6. Confira o nome e o destino do arquivo.
 7. Digite **S** e pressione **Enter** para baixar. Outra resposta cancela.
-8. Mantenha o PowerShell e o Chrome da automação abertos até terminar.
+8. Mantenha o PowerShell e o Edge da automação abertos até terminar.
 
 Se houver vários vídeos na página, confira a opção escolhida. Se nenhum vídeo for detectado, dê play ou recarregue a aula e tente novamente. Para limpar candidatos já detectados, digite **R** na seleção e recarregue a aula antes de tentar de novo.
 
@@ -177,11 +179,11 @@ Download concluído: ...\downloads\Nome da aula.mp4
 
 A porcentagem é uma estimativa baseada na duração do vídeo processada, não na quantidade de bytes. Ela pode avançar em saltos e ficar em 99% enquanto o arquivo é finalizado. Se a duração total não estiver disponível, o programa mostra os segundos processados.
 
-O arquivo fica na pasta **downloads**, dentro da pasta do projeto. Durante o download, o nome termina em `.part.mp4`. No sucesso, o arquivo é renomeado para `.mp4`, a mensagem **Download concluído** aparece e o Chrome da automação fecha.
+O arquivo fica na pasta **downloads**, dentro da pasta do projeto. Durante o download, o nome termina em `.part.mp4`. No sucesso, o arquivo é renomeado para `.mp4`, a mensagem **Download concluído** aparece e o Edge da automação fecha.
 
 Arquivos existentes não são sobrescritos: o programa acrescenta um número ao nome quando necessário. Uma interrupção forçada pode deixar um arquivo parcial; a versão atual não retoma downloads interrompidos.
 
-Para baixar outra aula, execute novamente o comando com o novo link. A versão atual baixa **uma aula por execução**. A sessão de login é reutilizada enquanto continuar válida.
+Para baixar outra aula, execute novamente o comando com o novo link. A versão atual baixa **uma aula por execução**. A sessão de login é reutilizada enquanto continuar válida. Ao migrar da versão que usava Chrome, faça login novamente no Edge: o perfil antigo não é reutilizado nem removido.
 
 ## Problemas comuns
 
@@ -193,7 +195,7 @@ Para baixar outra aula, execute novamente o comando com o novo link. A versão a
 | Não encontra `downloader.js` ou `package.json` | Use `Set-Location` para entrar na pasta correta do projeto. |
 | `Cannot find module 'playwright'` | Execute `npm.cmd install` dentro da pasta do projeto. |
 | Erro ao colar uma URL com `&` | Coloque o endereço inteiro entre aspas simples. |
-| Chrome não abre ou o perfil está em uso | Confirme que o Chrome está instalado. Encerre a execução anterior antes de iniciar outra com o mesmo perfil. Execute pelo PowerShell da sua área de trabalho. |
+| Edge não abre ou o perfil está em uso | Confirme que o Edge está instalado. Encerre a execução anterior antes de iniciar outra com o mesmo perfil. Execute pelo PowerShell da sua área de trabalho. |
 | Nenhuma playlist ou MP4 detectado | Faça login, dê play e só depois pressione Enter no terminal. Se necessário, recarregue a página. |
 | HTTP 401/403 ou falha ao obter mídia autenticada | Confira o acesso à aula e a sessão. Abra novamente a aula para capturar links atuais; links temporários podem expirar. |
 | FFmpeg informa uma opção desconhecida | Instale uma versão recente do FFmpeg e confira qual versão aparece em `ffmpeg -version`. |
@@ -212,11 +214,11 @@ package-lock.json
 README.md
 ```
 
-Não envie `node_modules`, `perfil-chrome`, `downloads` nem arquivos `downloader.backup-*.js`. O `.gitignore` já lista essas exclusões para operações com Git; ao fazer upload pelo navegador, selecione somente os arquivos desejados.
+Não envie `node_modules`, `perfil-edge`, `perfil-chrome` (perfil antigo), `downloads` nem arquivos `downloader.backup-*.js`. O `.gitignore` já lista essas exclusões para operações com Git; ao fazer upload pelo navegador, selecione somente os arquivos desejados.
 
-Em outro computador, `npm.cmd install` recria `node_modules`. Ao executar, o programa cria `perfil-chrome` e `downloads`. Você precisará fazer login novamente.
+Em outro computador, `npm.cmd install` recria `node_modules`. Ao executar, o programa cria `perfil-edge` e `downloads`. Você precisará fazer login novamente.
 
-**A pasta `perfil-chrome` contém dados da sua sessão de login.** Mantenha-a privada e considere que pastas dentro do OneDrive podem ser sincronizadas.
+**A pasta `perfil-edge` contém dados da sua sessão de login.** Mantenha-a privada e considere que pastas dentro do OneDrive podem ser sincronizadas.
 
 ## Testes e limites técnicos
 

@@ -3,6 +3,7 @@ node_modules/
 
 # Perfil do navegador e sessão de login
 perfil-chrome/
+perfil-edge/
 
 # Vídeos e arquivos incompletos
 downloads/
