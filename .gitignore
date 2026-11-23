@@ -1,0 +1,18 @@
+# Dependências instaladas localmente
+node_modules/
+
+# Perfil do navegador e sessão de login
+perfil-chrome/
+
+# Vídeos e arquivos incompletos
+downloads/
+*.part.mp4
+
+# Cópias locais de versões anteriores
+downloader.backup-*.js
+
+# Logs e configurações locais com possíveis credenciais
+*.log
+.env
+.env.*
+!.env.example
